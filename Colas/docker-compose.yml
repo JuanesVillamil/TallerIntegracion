@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    depends_on:
+      - queue_service1
+      - queue_service2
+      - queue_service3
+
+  queue_service1:
+    build: ./queue_service
+    environment:
+      - QUEUE_PORT=12345
+      - CLIENT_HOST=consumer1
+      - CLIENT_PORT=22345
+    ports:
+      - "12345:12345"
+
+  queue_service2:
+    build: ./queue_service
+    environment:
+      - QUEUE_PORT=12346
+      - CLIENT_HOST=consumer2
+      - CLIENT_PORT=22346
+    ports:
+      - "12346:12346"
+
+  queue_service3:
+    build: ./queue_service
+    environment:
+      - QUEUE_PORT=12347
+      - CLIENT_HOST=consumer3
+      - CLIENT_PORT=22347
+    ports:
+      - "12347:12347"
+
+  consumer1:
+    build: ./consumer
+    environment:
+      - CLIENT_PORT=22345
+    ports:
+      - "22345:22345"
+
+  consumer2:
+    build: ./consumer
+    environment:
+      - CLIENT_PORT=22346
+    ports:
+      - "22346:22346"
+
+  consumer3:
+    build: ./consumer
+    environment:
+      - CLIENT_PORT=22347
+    ports:
+      - "22347:22347"

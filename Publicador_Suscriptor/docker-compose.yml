@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  publicador:
+    build: ./publicador
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    # Aquí `entrypoint` mantiene el contenedor en ejecución sin ejecutar ningún script.
+
+  suscriptor:
+    build: ./suscriptor
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    # Igual que arriba, solo mantiene el contenedor en ejecución.
+
